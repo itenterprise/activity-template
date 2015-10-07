@@ -1,0 +1,72 @@
+package ${packageName};
+
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.os.Bundle;
+
+import ${superClassFqcn};
+import com.it.core.menu.SideMenuItem;
+
+import java.util.ArrayList;
+
+public class ${activityClass} extends ${superClass} {
+
+    private static final int FIRST_MENU_ITEM = 101;
+	private static final int SECOND_MENU_ITEM = 102;
+
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		setContentView(R.layout.${layoutName});
+		// Инициализация меню
+		ArrayList<SideMenuItem> menuItems = new ArrayList<SideMenuItem>();
+		menuItems.add(new SideMenuItem(FIRST_MENU_ITEM, getString(R.string.first_item), R.drawable.ic_action_accept_white, false));
+		menuItems.add(new SideMenuItem(SECOND_MENU_ITEM, getString(R.string.second_item), R.drawable.ic_action_accept_white, false));
+		setNavigationDrawer(R.layout.${layoutName}, R.id.container, R.id.drawer_layout, R.id.navigation_drawer,
+				R.menu.${menuName}, R.menu.global, 
+				R.string.<#if isNewProject>app_name<#else>title_${activityToLayout(activityClass)}</#if>, 
+				menuItems, 0);
+		super.onCreate(savedInstanceState);
+	}
+
+	@Override
+	protected void onAfterCreate() {
+		super.onAfterCreate();
+	}
+
+	@Override
+	protected boolean needsAuthentication(){
+		return true;
+	}
+
+	@Override
+	public void onNavigationDrawerItemSelected(SideMenuItem item) {
+		// update the main content by replacing fragments
+		Fragment checkedFragment;
+		switch (item.Id) {
+			case FIRST_MENU_ITEM:
+				checkedFragment = ${fragmentClass}.newInstance(item.Title);
+				break;
+			case SECOND_MENU_ITEM:
+				checkedFragment = ${fragmentClass}.newInstance(item.Title);
+				break;
+			default:
+				checkedFragment = new ${fragmentClass}();
+				break;
+		}
+		setFragmentActive(checkedFragment);
+		super.onNavigationDrawerItemSelected(item);
+	}
+
+	/**
+	 * Установить фрагмент активным
+	 * @param fragment Фрагмент
+	 */
+	private void setFragmentActive(Fragment fragment) {
+		// update the main content by replacing fragments
+		FragmentManager fragmentManager = getFragmentManager();
+		fragmentManager.beginTransaction()
+				.replace(R.id.container, fragment)
+				.commitAllowingStateLoss();
+	}
+
+}
