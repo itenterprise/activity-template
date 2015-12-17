@@ -24,7 +24,7 @@ public class ${activityClass} extends ${superClass} {
 		setNavigationDrawer(R.layout.${layoutName}, R.id.container, R.id.drawer_layout, R.id.navigation_drawer,
 				R.menu.${menuName}, R.menu.global, 
 				R.string.<#if isNewProject>app_name<#else>title_${activityToLayout(activityClass)}</#if>, 
-				menuItems, 0);
+				menuItems, 0, true, true);
 		super.onCreate(savedInstanceState);
 	}
 

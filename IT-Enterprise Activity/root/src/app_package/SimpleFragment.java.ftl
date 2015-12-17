@@ -14,11 +14,6 @@ public class ${fragmentClass} extends Fragment {
 
     private static final String ARG_ITEM_TITLE = "Item_title";
 	
-	/**
-	 * Создание экземпляра фрагмента ${fragmentClass} с параметрами
-	 * @param itemTitle Заголовок активного пункта меню
-	 * @return Экземпляр фрагмента ${fragmentClass}
-	 */
 	public static ${fragmentClass} newInstance(String itemTitle) {
 		${fragmentClass} fragment = new ${fragmentClass}();
 		Bundle args = new Bundle();
@@ -26,11 +21,11 @@ public class ${fragmentClass} extends Fragment {
 		fragment.setArguments(args);
 		return fragment;
 	}
-	
+
 	public ${fragmentClass}() {
 		// Required empty public constructor
 	}
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

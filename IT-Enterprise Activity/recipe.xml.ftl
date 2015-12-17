@@ -3,16 +3,16 @@
 
     <#if !(hasDependency('com.android.support:support-v4'))><dependency mavenUrl="com.android.support:support-v4:${targetApi}.+"/></#if>
 
-	<merge from="build.gradle.ftl"
-             to="${escapeXmlAttribute(projectOut)}/build.gradle" />
-	
 	<#if isNewProject>
-	<instantiate from="AndroidManifestForNew.xml.ftl"
+	<merge from="AndroidManifest.xml.ftl"
 			 to="${escapeXmlAttribute(manifestOut)}/AndroidManifest.xml" />
 	<#else>		 
     <merge from="AndroidManifest.xml.ftl"
              to="${escapeXmlAttribute(manifestOut)}/AndroidManifest.xml" />
-	</#if>		 
+	</#if>	
+
+	<merge from="build.gradle.ftl"
+             to="${escapeXmlAttribute(projectOut)}/build.gradle" />	
 		 
     <instantiate from="res/menu/main.xml.ftl"
             to="${escapeXmlAttribute(resOut)}/menu/${menuName}.xml" />
@@ -25,12 +25,17 @@
     <merge from="res/values-w820dp/dimens.xml"
              to="${escapeXmlAttribute(resOut)}/values-w820dp/dimens.xml" />
 	<#if isNewProject>
-	<instantiate from="res/values/styles.xml.ftl"
+	<merge from="res/values/styles.xml.ftl"
 			 to="${escapeXmlAttribute(resOut)}/values/styles.xml" />
 	</#if>
 
-    <instantiate from="res/menu/global.xml.ftl"
+	<#if isNewProject>
+	<instantiate from="res/menu/global.xml.ftl"
                    to="${escapeXmlAttribute(resOut)}/menu/global.xml" />
+	<#else>	
+	<merge from="res/menu/global.xml.ftl"
+                   to="${escapeXmlAttribute(resOut)}/menu/global.xml" />	
+	</#if>	
 
     <instantiate from="res/layout/activity_main.xml.ftl"
                    to="${escapeXmlAttribute(resOut)}/layout/${layoutName}.xml" />
